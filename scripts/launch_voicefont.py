@@ -35,6 +35,15 @@ def server_command(uv, port):
     ]
 
 
+def require_frontend(root):
+    """Fail before spawning when the checkout has no compiled React UI."""
+    bundle = root / "frontend/dist"
+    if not (bundle / "index.html").is_file() or not any((bundle / "assets").glob("*.js")):
+        raise RuntimeError(
+            "React frontend is not built. Run npm --prefix frontend run build first."
+        )
+
+
 def valid_health(payload):
     return (
         isinstance(payload, dict)
@@ -77,6 +86,7 @@ def main():
     uv = shutil.which("uv")
     if not uv or not (ROOT / ".venv/Scripts/python.exe").is_file():
         raise SystemExit("Local app is not provisioned. Follow docs/local-setup.md first.")
+    require_frontend(ROOT)
     # Do not open an unrelated service or silently reuse another registry on this port.
     with socket.socket() as probe:
         try:
