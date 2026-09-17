@@ -1,0 +1,39 @@
+# Private voice data and generated model artifacts
+data/
+models/
+artifacts/
+mlruns/
+mlartifacts/
+*.db
+*.sqlite
+*.sqlite3
+*.wav
+*.mp3
+*.flac
+*.npz
+*.onnx
+*.pt
+*.pth
+*.ckpt
+# Environment and builds
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+# Secrets and local infrastructure state
+.env
+.env.*
+*.pem
+*.key
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+.DS_Store
