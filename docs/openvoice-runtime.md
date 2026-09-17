@@ -31,43 +31,22 @@ the spike's verified artifact byte for byte.
 
 ## Provisioning (one-time, offline afterwards)
 
-Provisioning copies already-verified public artifacts from the spike workspace
-into `data/openvoice-runtime` (git-ignored), verifies every hash and records a
-manifest. It never copies a virtualenv and never downloads anything.
+Use [the local setup guide](local-setup.md) for provisioning. The supported
+interpreter is the recreated **.venv-openvoice** under this checkout, pinned by
+`requirements-openvoice.txt`. The installed config no longer depends on Temp.
+
+With the verified public runtime bundle already present:
 
 ```bash
-python scripts/provision_openvoice.py \
-  --source "C:/Users/Chris/AppData/Local/Temp/voicefont-openvoice-spike" \
-  --reuse-python "C:/Users/Chris/AppData/Local/Temp/voicefont-openvoice-spike/.venv/Scripts/python.exe"
+.venv/Scripts/python.exe scripts/setup_openvoice.py --python 3.10
+# After package caches are populated:
+.venv/Scripts/python.exe scripts/setup_openvoice.py --offline
 ```
 
-The spike venv keeps its absolute Python executable; venvs are not relocatable,
-so the runtime references it explicitly in `config.json` instead of copying.
-Alternative: recreate a fresh Python 3.10 venv from the pinned
-`requirements-frozen.txt` (saved in `data/openvoice-runtime/provenance/`) and
-pass that executable with `--reuse-python`. Do not blind-copy a venv.
-
-For an already promoted bundle, a durable environment can be recreated explicitly
-with the following Windows native-path commands (package installation needs
-network or a populated uv cache; this recipe has not been exercised here):
-
-```bash
-uv venv --python "C:/Users/Chris/AppData/Local/Programs/Python/Python310/python.exe" data/openvoice-runtime/.venv
-uv pip sync --python data/openvoice-runtime/.venv/Scripts/python.exe \
-  --extra-index-url https://download.pytorch.org/whl/cpu \
-  data/openvoice-runtime/provenance/requirements-frozen.txt
-```
-
-Then set the config's `python` field to the new absolute executable and run the
-heavy offline test before relying on it. The installed configuration currently
-reuses the original spike interpreter explicitly; deleting that spike venv will
-make capability unavailable. Public assets, source, cached tokenizers, NLTK data,
-source notices and manifests are already durable in the project data directory.
-
-A fresh machine: re-run the documented spike download steps once (public
-packages, pinned HF files, NLTK resource), then provision. Downloads happen
-only during provisioning, never during serving; the worker fails closed on
-missing or hash-mismatched resources.
+Setup verifies the manifest and performs real offline technical-fixture
+inference before publishing the config. Never copy a virtual environment.
+A fresh checkout still needs the separately prepared public asset bundle;
+serving never downloads missing models. See the setup guide for that limitation.
 
 Config is discovered from `VOICEFONT_OPENVOICE_CONFIG`, defaulting to
 `data/openvoice-runtime/config.json`. The file contains only local paths, no
@@ -101,13 +80,10 @@ by using `app.include_router`. Health can call `synthesis_capabilities()` (also
 exported as `capabilities`). Availability means configured resources exist and
 sizes match, not a successful neural health probe; worker startup checks hashes.
 
-The parent still needs to replace its unconditional `/speak` 503. Retain the
-router instance, then have that compatibility endpoint accept `SpeechRequest`
-and return `invoke(router.synthesis_service.submit, **body.model_dump())` with
-status 202. This is the same bounded asynchronous job flow, not a second service.
-Do not create an additional router/service per request. The canonical WAV download
-remains `audio_url` returned on completion. Never call technical-fixture mode
-from an HTTP endpoint.
+`api.py` already mounts a single shared synthesis service. `/speak` accepts
+`SpeechRequest` and submits to that service with status 202, using the same
+bounded asynchronous job flow. The canonical WAV download is `audio_url`
+returned on completion. Technical-fixture mode is never exposed by HTTP.
 
 The router owns its lifespan: on shutdown it cancels running work, joins the
 coordinator thread and deletes all private job files. Tests use

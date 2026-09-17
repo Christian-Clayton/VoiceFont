@@ -97,9 +97,8 @@ verified bundle still needs the explicit public-asset preparation described in
 [the spike report](openvoice-spike.md) and the retained
 `data/openvoice-runtime/provenance/README.md`. A turnkey fresh-machine asset
 fetcher is not supplied by this setup script. Serving will never attempt it.
-The historical temporary interpreter instructions in [the runtime report](openvoice-runtime.md)
-are superseded by this guide: **the current config no longer depends on the spike
-or anything under Temp**.
+The [runtime report](openvoice-runtime.md) describes the serving boundaries.
+**The current config no longer depends on the spike or anything under Temp**.
 
 ## Verify the installation
 

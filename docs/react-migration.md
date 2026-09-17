@@ -19,6 +19,16 @@ Components cover calibration, recording/replay/import/retakes, saved sessions, p
 
 The speech engine was independently exercised before the frontend migration using the durable local Python environment: genuine 3.413333-second, 22050 Hz mono output with Python networking blocked. SHA256: `31deaac0f90a71476002df1ddd99b147aff94dd3548dd2ec04a82b9894c3ae02`. Browser speech failure/cancel tests use explicit network-boundary stubs and are not evidence of neural synthesis. No human listening or speaker similarity evaluation was performed.
 
+## Subsequent regression evidence
+
+A later full browser run (`data/browser-e2e/20260917-211748/`) failed when
+`POST /calibration/sessions/{id}/select` returned 503. The saved trace confirms
+a backend storage failure, not a JavaScript exception; the underlying OSError
+was not recorded, so its root cause remains unknown. Three isolated wizard
+runs subsequently passed, including `20260917-212212`, but no fix was made.
+Do not treat these passes as resolution of the intermittent failure.
+Independent migration review remains incomplete.
+
 ## Known remaining work
 
-This migration does not complete optional infrastructure, multi-style TTS, consent deletion/revocation, or a fresh-machine model asset downloader. React interaction race/error recovery needs broader component-level regression coverage and independent review; four utility tests and the happy-path browser suite are not exhaustive. The acoustic experiment backend was exercised with generated audio, but the React experiment panel has not yet completed a dedicated browser training-to-results acceptance test.
+This migration does not complete optional infrastructure, multi-style TTS, consent deletion/revocation, or a fresh-machine model asset downloader. React interaction race/error recovery needs broader component-level regression coverage and independent review; four utility tests and the happy-path browser suite are not exhaustive. The dedicated React experiment acceptance test now passes: eight generated WAVs, explicit training consent, actual local training, displayed metrics checked against the backend, disjoint train/holdout groups and result restoration after reload. Evidence: `data/browser-e2e/20260917-212052/`.
