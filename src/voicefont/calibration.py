@@ -429,7 +429,11 @@ class CalibrationStore:
         data["updated_at"] = _now()
         data.pop("_finalizing")
         self._save(data)
-        return self._profile_public(profile)
+        result = self._profile_public(profile)
+        from .registry import ProfileStore
+
+        result["prosody"] = ProfileStore(self.profile_root).get_prosody(profile.voice_id)
+        return result
 
     def finalize(self, session_id, *, voice_id, name):
         """Validate before intent; roll back unpublished work or recover forward."""
@@ -444,7 +448,9 @@ class CalibrationStore:
                 profile = profiles.get(data["profile_id"])
                 if data["profile_id"] != voice_id or profile.name != name:
                     raise CalibrationConflict("session already finalized with another profile")
-                return self._profile_public(profile)
+                result = self._profile_public(profile)
+                result["prosody"] = profiles.get_prosody(profile.voice_id)
+                return result
             if "_finalizing" in data:
                 profile = self._pending_profile(data)
                 if profile is not None:

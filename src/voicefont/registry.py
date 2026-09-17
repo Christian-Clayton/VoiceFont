@@ -166,10 +166,15 @@ class ProfileStore:
                 stream.write(audio.raw_bytes)
             with (stage / "profile.json").open("x", encoding="utf-8") as stream:
                 json.dump(profile.to_dict(), stream, indent=2, allow_nan=False)
+            from .prosody import contour, summarize
+
+            with (stage / "prosody.json").open("x", encoding="utf-8") as stream:
+                json.dump(summarize(contour(audio)), stream, indent=2, allow_nan=False)
             target.mkdir()  # Atomic exclusive reservation, including across processes.
             owns_target = True
             (stage / "references").rename(target / "references")
             (stage / "profile.json").rename(target / "profile.json")
+            (stage / "prosody.json").rename(target / "prosody.json")
         except BaseException:
             if owns_target:
                 shutil.rmtree(target)
@@ -240,6 +245,26 @@ class ProfileStore:
             if isinstance(exc, RegistryError):
                 raise
             raise RegistryError("invalid stored profile") from exc
+
+    def get_prosody(self, voice_id: str) -> dict | None:
+        """Return the stored prosodic summary, or None for absent/legacy profiles."""
+        path = self._profile_dir(voice_id) / "prosody.json"
+        if path.resolve() != path:
+            raise RegistryError("linked profile files are not permitted")
+        try:
+            with path.open("rb") as stream:
+                raw = stream.read(65537)
+        except FileNotFoundError:
+            return None
+        if len(raw) > 65536:
+            raise RegistryError("prosody metadata exceeds limit")
+        try:
+            data = json.loads(raw)
+        except ValueError as exc:
+            raise RegistryError("invalid stored prosody") from exc
+        if not isinstance(data, dict) or data.get("version") != "prosody-v1":
+            raise RegistryError("unsupported prosody version")
+        return data
 
     def list_profiles(self) -> list[Profile]:
         if not self.root.exists():
