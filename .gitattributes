@@ -1,0 +1,3 @@
+# Historical documents must retain their exact original bytes and hashes.
+docs/planning/archive/** -text
+conversation.md -text
