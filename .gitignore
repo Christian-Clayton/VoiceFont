@@ -16,6 +16,9 @@ mlartifacts/
 *.pth
 *.ckpt
 # Environment and builds
+node_modules/
+frontend/coverage/
+*.tsbuildinfo
 .venv/
 .venv-*/
 __pycache__/

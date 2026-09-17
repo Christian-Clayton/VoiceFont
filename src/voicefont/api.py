@@ -31,36 +31,17 @@ def default_root() -> Path:
 
 def _mount_routers(app: FastAPI, store: ProfileStore) -> None:
     """Mount required product modules, failing loudly on broken installations."""
-    from importlib import resources
-
-    from fastapi.responses import HTMLResponse, RedirectResponse, Response
-
     from .calibration_routes import create_calibration_router
     from .experiment_routes import create_experiment_router
+    from .frontend import mount_frontend
     from .synthesis_routes import create_synthesis_router
 
-    assets = resources.files("voicefont") / "calibration_assets"
     app.include_router(create_calibration_router(store.root))
     app.include_router(create_experiment_router(store.root))
     speech_router = create_synthesis_router(store.root)
     app.state.synthesis_service = speech_router.synthesis_service
     app.include_router(speech_router)
-
-    @app.get("/", include_in_schema=False)
-    def index():
-        return RedirectResponse("/calibrate")
-
-    @app.get("/calibrate", include_in_schema=False)
-    def calibrate_page():
-        return HTMLResponse((assets / "index.html").read_text(encoding="utf-8"))
-
-    @app.get("/calibration-assets/{name}", include_in_schema=False)
-    def calibration_asset(name: str):
-        allowed = {"app.js", "recorder.js", "wav.js", "styles.css", "experiments.js"}
-        if name not in allowed or not (assets / name).is_file():
-            raise HTTPException(404, "asset not found")
-        media = "text/css" if name.endswith(".css") else "text/javascript"
-        return Response((assets / name).read_bytes(), media_type=media)
+    mount_frontend(app)
 
 
 def create_app(

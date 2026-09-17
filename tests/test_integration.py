@@ -8,7 +8,7 @@ from voicefont.api import create_app
 def test_routers_are_mounted_with_browser_page_and_assets(tmp_path, monkeypatch):
     monkeypatch.setenv("VOICEFONT_OPENVOICE_CONFIG", str(tmp_path / "missing-config.json"))
     client = TestClient(create_app(tmp_path))
-    for path in ("/calibrate", "/calibration/corpus", "/calibration-assets/app.js"):
+    for path in ("/calibrate", "/calibration/corpus"):
         assert client.get(path).status_code == 200, path
     capabilities = client.get("/synthesis/capabilities").json()
     assert capabilities["available"] is False
@@ -74,4 +74,4 @@ def test_internal_asset_sources_not_served(tmp_path):
     with TestClient(create_app(tmp_path)) as client:
         assert client.get("/calibration-assets/build_corpus.py").status_code == 404
         assert client.get("/calibration-assets/recorder.test.cjs").status_code == 404
-        assert client.get("/calibration-assets/styles.css").status_code == 200
+        assert client.get("/calibration-assets/styles.css").status_code == 404
