@@ -17,6 +17,7 @@ mlartifacts/
 *.ckpt
 # Environment and builds
 .venv/
+.venv-*/
 __pycache__/
 *.py[cod]
 .pytest_cache/

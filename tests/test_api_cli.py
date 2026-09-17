@@ -8,7 +8,10 @@ from voicefont.api import create_app
 from voicefont.cli import app
 
 
-def test_api_enroll_search_inspect_and_unavailable_synthesis(signal_wav, tmp_path):
+def test_api_enroll_search_inspect_and_unavailable_synthesis(
+    signal_wav, tmp_path, monkeypatch
+):
+    monkeypatch.setenv("VOICEFONT_OPENVOICE_CONFIG", str(tmp_path / "missing-config.json"))
     client = TestClient(create_app(tmp_path))
     assert client.get("/health").json() == {
         "status": "ok",

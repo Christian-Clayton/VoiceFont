@@ -1,0 +1,915 @@
+{
+  "version": "1.0.0",
+  "language": "en-GB",
+  "title": "VoiceFont Calibration Checklist",
+  "disclaimer": "Use your own natural accent, not an imitation. These original prompts sample everyday sounds and delivery choices; they cannot capture every facet of a voice and do not test identity, emotion or pronunciation. Stay within a comfortable speaking range, take breaks and skip any task that feels uncomfortable. Record only your own voice or one you have explicit permission to use.",
+  "categories": [
+    {
+      "id": "phonetic",
+      "title": "Sounds in everyday words",
+      "description": "Natural word contrasts, vowels and consonants. Keep any distinctions or mergers that belong to your own accent."
+    },
+    {
+      "id": "connected",
+      "title": "Connected speech",
+      "description": "Link words at your normal pace. There is no need to pronounce every written letter separately."
+    },
+    {
+      "id": "questions",
+      "title": "Questions and emphasis",
+      "description": "Use meaning to shape the sentence. Capitals indicate a suggested focus, not extra volume."
+    },
+    {
+      "id": "range",
+      "title": "Comfortable variation",
+      "description": "Small, easy changes only. Never strain, shout, whisper forcefully or push to your limits. Every task here is optional."
+    },
+    {
+      "id": "expression",
+      "title": "Expression and style pairs",
+      "description": "Read the same words with a different intention. Gentle acting is enough; skip anything uncomfortable."
+    },
+    {
+      "id": "conversation",
+      "title": "Everyday conversation",
+      "description": "Speak as if talking with someone you know. Use the supplied text so repeated recordings remain comparable."
+    },
+    {
+      "id": "consistency",
+      "title": "Repeat and consistency",
+      "description": "Repeat earlier words without trying to copy a waveform. Comfortable, ordinary delivery is the goal."
+    }
+  ],
+  "prompts": [
+    {
+      "id": "phonetic-01",
+      "category": "phonetic",
+      "text": "Please leave the green ticket beside the little blue tin.",
+      "instruction": "Use your ordinary speaking voice.",
+      "dimensions": [
+        "vowels:kit-fleece"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-02",
+      "category": "phonetic",
+      "text": "The full bowl stood beside a cool pool of water.",
+      "instruction": "Keep your own natural distinction between full and pool.",
+      "dimensions": [
+        "vowels:foot-goose"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-03",
+      "category": "phonetic",
+      "text": "Sam packed a black bag and caught the last bus home.",
+      "instruction": "Say this as an everyday observation; keep your natural a sounds.",
+      "dimensions": [
+        "vowels:trap-bath-strut"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-04",
+      "category": "phonetic",
+      "text": "We checked the wet deck before taking the late train.",
+      "instruction": "Read smoothly without stretching the vowels.",
+      "dimensions": [
+        "vowels:dress-face"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-05",
+      "category": "phonetic",
+      "text": "A small pot of sauce was waiting near the door.",
+      "instruction": "Use the vowel sounds that feel normal in your accent.",
+      "dimensions": [
+        "vowels:lot-thought"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-06",
+      "category": "phonetic",
+      "text": "The nurse heard a bird while stirring her tea.",
+      "instruction": "Keep or omit r sounds as you naturally would.",
+      "dimensions": [
+        "vowels:nurse",
+        "r:accent-natural"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-07",
+      "category": "phonetic",
+      "text": "The bright kite rose above the quiet lane.",
+      "instruction": "Read with easy movement through the vowel sounds.",
+      "dimensions": [
+        "diphthongs:price-goat-face"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-08",
+      "category": "phonetic",
+      "text": "Our neighbour found a brown pouch under the chair.",
+      "instruction": "Do not imitate another accent.",
+      "dimensions": [
+        "diphthongs:mouth",
+        "vowels:chair"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-09",
+      "category": "phonetic",
+      "text": "Roy enjoyed the noise of coins dropping into the tray.",
+      "instruction": "Keep a conversational pace.",
+      "dimensions": [
+        "diphthongs:choice"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-10",
+      "category": "phonetic",
+      "text": "Pat bought a pale blue boat for the pond.",
+      "instruction": "Let p and b sounds stay clear without overdoing them.",
+      "dimensions": [
+        "consonants:p-b"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-11",
+      "category": "phonetic",
+      "text": "Take the tiny dish to the desk by the gate.",
+      "instruction": "Use a relaxed voice and ordinary consonants.",
+      "dimensions": [
+        "consonants:t-d",
+        "k-g"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-12",
+      "category": "phonetic",
+      "text": "Five fresh flowers filled the vase by the window.",
+      "instruction": "Do not force breath through the f and v sounds.",
+      "dimensions": [
+        "consonants:f-v"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-13",
+      "category": "phonetic",
+      "text": "I think those three paths lead to the other side.",
+      "instruction": "Use your natural pronunciation of th.",
+      "dimensions": [
+        "consonants:th-voiced-unvoiced"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-14",
+      "category": "phonetic",
+      "text": "Sue chose a soft cushion with a silver zip.",
+      "instruction": "Read naturally rather than as a tongue twister.",
+      "dimensions": [
+        "consonants:s-z",
+        "sh-ch"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-15",
+      "category": "phonetic",
+      "text": "The usual measure of jam is a generous spoonful.",
+      "instruction": "Keep the middle sounds in usual and measure relaxed.",
+      "dimensions": [
+        "consonants:zh-j"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-16",
+      "category": "phonetic",
+      "text": "Lily rarely leaves her red umbrella in the hall.",
+      "instruction": "Keep your own r and l sounds; no imitation.",
+      "dimensions": [
+        "consonants:l-r",
+        "h"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-17",
+      "category": "phonetic",
+      "text": "Mum hung the linen near the warm landing.",
+      "instruction": "Read gently at an everyday volume.",
+      "dimensions": [
+        "consonants:m-n-ng"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-18",
+      "category": "phonetic",
+      "text": "We watched the quick young waiter carry the tray.",
+      "instruction": "Let the words flow at your usual pace.",
+      "dimensions": [
+        "consonants:w-y",
+        "clusters"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-19",
+      "category": "phonetic",
+      "text": "The crisp toast slipped from the plate onto the cloth.",
+      "instruction": "Keep the clusters natural; do not exaggerate final sounds.",
+      "dimensions": [
+        "clusters:initial-final"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "phonetic-20",
+      "category": "phonetic",
+      "text": "A careful photographer noticed a colourful butterfly.",
+      "instruction": "Allow unstressed syllables to become lighter naturally.",
+      "dimensions": [
+        "schwa",
+        "word-stress"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-01",
+      "category": "connected",
+      "text": "Could you put it on the table when you have a moment?",
+      "instruction": "Read as one polite request, with natural linking.",
+      "dimensions": [
+        "linking",
+        "weak-forms"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-02",
+      "category": "connected",
+      "text": "I would have called, but the train went through a tunnel.",
+      "instruction": "Use the contractions or reductions that occur naturally while reading.",
+      "dimensions": [
+        "weak-forms",
+        "phrase-boundaries"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-03",
+      "category": "connected",
+      "text": "We are going to pick up a few things on the way back.",
+      "instruction": "Use a normal conversational rhythm.",
+      "dimensions": [
+        "reduction",
+        "linking"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-04",
+      "category": "connected",
+      "text": "The bread and butter are in the bag next to the kettle.",
+      "instruction": "Let small connecting words stay light.",
+      "dimensions": [
+        "weak-forms:and-the-to"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-05",
+      "category": "connected",
+      "text": "First we checked the address, then we rang the bell.",
+      "instruction": "Take an easy pause at the comma.",
+      "dimensions": [
+        "boundary",
+        "clusters"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-06",
+      "category": "connected",
+      "text": "I left an orange and a note on the kitchen counter.",
+      "instruction": "Link adjacent words however your accent normally does.",
+      "dimensions": [
+        "vowel-linking"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-07",
+      "category": "connected",
+      "text": "When the rain stopped, everyone stepped outside for a look.",
+      "instruction": "Avoid separating every word.",
+      "dimensions": [
+        "assimilation",
+        "rhythm"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-08",
+      "category": "connected",
+      "text": "It is a bit of a walk, but there is a bench halfway.",
+      "instruction": "Read as a reassuring comment to a friend.",
+      "dimensions": [
+        "weak-forms",
+        "rhythm"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-09",
+      "category": "connected",
+      "text": "The parcel should arrive at about a quarter past ten.",
+      "instruction": "Use an ordinary pace and natural t sounds.",
+      "dimensions": [
+        "connected-t",
+        "weak-forms"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "connected-10",
+      "category": "connected",
+      "text": "If you need anything else, I will be just across the road.",
+      "instruction": "Keep the conditional phrase connected and pause where comfortable.",
+      "dimensions": [
+        "phrasing",
+        "linking"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "questions-01",
+      "category": "questions",
+      "text": "Did you leave the window open?",
+      "instruction": "Ask a genuine yes-or-no question, not an accusation.",
+      "dimensions": [
+        "question:yes-no"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "questions-02",
+      "category": "questions",
+      "text": "Where did you put the spare key?",
+      "instruction": "Ask as if you genuinely need the information.",
+      "dimensions": [
+        "question:wh"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "questions-03",
+      "category": "questions",
+      "text": "Would you prefer tea, coffee, or a glass of water?",
+      "instruction": "Offer three choices with natural list intonation.",
+      "dimensions": [
+        "question:choice",
+        "list"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "questions-04",
+      "category": "questions",
+      "text": "You have already booked the tickets, have you?",
+      "instruction": "Sound mildly curious. Use the question tune natural to you.",
+      "dimensions": [
+        "question:tag"
+      ],
+      "optional": false,
+      "style": "curious"
+    },
+    {
+      "id": "questions-05",
+      "category": "questions",
+      "text": "I thought you meant the small box.",
+      "instruction": "Emphasise I: someone else understood differently.",
+      "dimensions": [
+        "stress:subject"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "questions-06",
+      "category": "questions",
+      "text": "I thought you meant the small box.",
+      "instruction": "Emphasise small: the size was the misunderstanding.",
+      "dimensions": [
+        "stress:adjective"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "questions-07",
+      "category": "questions",
+      "text": "We can meet on Friday if that suits you.",
+      "instruction": "Emphasise Friday to suggest a different day.",
+      "dimensions": [
+        "stress:time"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "questions-08",
+      "category": "questions",
+      "text": "We can meet on Friday if that suits you.",
+      "instruction": "Make the invitation sound open and flexible, not insistent.",
+      "dimensions": [
+        "stress:deemphasis"
+      ],
+      "optional": false,
+      "style": "warm"
+    },
+    {
+      "id": "range-01",
+      "category": "range",
+      "text": "The path curves gently round the garden.",
+      "instruction": "Use your normal comfortable pitch as a reference.",
+      "dimensions": [
+        "pitch:baseline"
+      ],
+      "optional": true,
+      "style": "neutral"
+    },
+    {
+      "id": "range-02",
+      "category": "range",
+      "text": "The path curves gently round the garden.",
+      "instruction": "Use a slightly lower comfortable speaking pitch. Do not force it.",
+      "dimensions": [
+        "pitch:lower-comfortable"
+      ],
+      "optional": true,
+      "style": "low"
+    },
+    {
+      "id": "range-03",
+      "category": "range",
+      "text": "The path curves gently round the garden.",
+      "instruction": "Use a slightly higher comfortable speaking pitch. No falsetto is needed.",
+      "dimensions": [
+        "pitch:higher-comfortable"
+      ],
+      "optional": true,
+      "style": "high"
+    },
+    {
+      "id": "range-04",
+      "category": "range",
+      "text": "I will put the clean cups on the shelf.",
+      "instruction": "Speak softly but with voice, not a whisper. Skip if effortful.",
+      "dimensions": [
+        "volume:soft"
+      ],
+      "optional": true,
+      "style": "soft"
+    },
+    {
+      "id": "range-05",
+      "category": "range",
+      "text": "I will put the clean cups on the shelf.",
+      "instruction": "Use your normal indoor speaking volume.",
+      "dimensions": [
+        "volume:baseline"
+      ],
+      "optional": true,
+      "style": "neutral"
+    },
+    {
+      "id": "range-06",
+      "category": "range",
+      "text": "I will put the clean cups on the shelf.",
+      "instruction": "Project a little as if to someone across a small room. Do not shout.",
+      "dimensions": [
+        "volume:projected-comfortable"
+      ],
+      "optional": true,
+      "style": "projected"
+    },
+    {
+      "id": "range-07",
+      "category": "range",
+      "text": "We have time to check the map before we leave.",
+      "instruction": "Speak a little slower than usual, keeping an easy rhythm.",
+      "dimensions": [
+        "rate:slow"
+      ],
+      "optional": true,
+      "style": "slow"
+    },
+    {
+      "id": "range-08",
+      "category": "range",
+      "text": "We have time to check the map before we leave.",
+      "instruction": "Use your ordinary speaking pace.",
+      "dimensions": [
+        "rate:baseline"
+      ],
+      "optional": true,
+      "style": "neutral"
+    },
+    {
+      "id": "range-09",
+      "category": "range",
+      "text": "We have time to check the map before we leave.",
+      "instruction": "Speak a little faster if comfortable. Clear speech matters more than speed.",
+      "dimensions": [
+        "rate:brisk"
+      ],
+      "optional": true,
+      "style": "brisk"
+    },
+    {
+      "id": "expression-01",
+      "category": "expression",
+      "text": "There is a seat for you by the window.",
+      "instruction": "Read plainly as factual information.",
+      "dimensions": [
+        "pair:seat",
+        "emotion:neutral"
+      ],
+      "optional": true,
+      "style": "neutral"
+    },
+    {
+      "id": "expression-02",
+      "category": "expression",
+      "text": "There is a seat for you by the window.",
+      "instruction": "Sound gently welcoming, as if greeting a friend.",
+      "dimensions": [
+        "pair:seat",
+        "emotion:warm"
+      ],
+      "optional": true,
+      "style": "warm"
+    },
+    {
+      "id": "expression-03",
+      "category": "expression",
+      "text": "The little plant has grown a new leaf.",
+      "instruction": "Read as a simple everyday observation.",
+      "dimensions": [
+        "pair:plant",
+        "emotion:neutral"
+      ],
+      "optional": true,
+      "style": "neutral"
+    },
+    {
+      "id": "expression-04",
+      "category": "expression",
+      "text": "The little plant has grown a new leaf.",
+      "instruction": "Let a little pleasure show. A small change is enough.",
+      "dimensions": [
+        "pair:plant",
+        "emotion:pleased"
+      ],
+      "optional": true,
+      "style": "pleased"
+    },
+    {
+      "id": "expression-05",
+      "category": "expression",
+      "text": "We can try the other route in the morning.",
+      "instruction": "Read plainly, without trying to persuade.",
+      "dimensions": [
+        "pair:route",
+        "emotion:neutral"
+      ],
+      "optional": true,
+      "style": "neutral"
+    },
+    {
+      "id": "expression-06",
+      "category": "expression",
+      "text": "We can try the other route in the morning.",
+      "instruction": "Sound calmly reassuring, not forceful.",
+      "dimensions": [
+        "pair:route",
+        "emotion:reassuring"
+      ],
+      "optional": true,
+      "style": "reassuring"
+    },
+    {
+      "id": "expression-07",
+      "category": "expression",
+      "text": "I did not expect to find a letter in the box.",
+      "instruction": "Give the information matter-of-factly.",
+      "dimensions": [
+        "pair:letter",
+        "emotion:neutral"
+      ],
+      "optional": true,
+      "style": "neutral"
+    },
+    {
+      "id": "expression-08",
+      "category": "expression",
+      "text": "I did not expect to find a letter in the box.",
+      "instruction": "Add gentle surprise without gasping or raising your voice.",
+      "dimensions": [
+        "pair:letter",
+        "emotion:surprised"
+      ],
+      "optional": true,
+      "style": "surprised"
+    },
+    {
+      "id": "expression-09",
+      "category": "expression",
+      "text": "The meeting will begin after the short break.",
+      "instruction": "Read like a clear, calm announcement.",
+      "dimensions": [
+        "pair:meeting",
+        "style:formal"
+      ],
+      "optional": true,
+      "style": "formal"
+    },
+    {
+      "id": "expression-10",
+      "category": "expression",
+      "text": "The meeting will begin after the short break.",
+      "instruction": "Say it casually to a colleague beside you.",
+      "dimensions": [
+        "pair:meeting",
+        "style:casual"
+      ],
+      "optional": true,
+      "style": "casual"
+    },
+    {
+      "id": "expression-11",
+      "category": "expression",
+      "text": "The lid is still stuck, so I will leave it for now.",
+      "instruction": "Read as neutral information.",
+      "dimensions": [
+        "pair:lid",
+        "emotion:neutral"
+      ],
+      "optional": true,
+      "style": "neutral"
+    },
+    {
+      "id": "expression-12",
+      "category": "expression",
+      "text": "The lid is still stuck, so I will leave it for now.",
+      "instruction": "Suggest mild frustration with timing, not strain or loudness.",
+      "dimensions": [
+        "pair:lid",
+        "emotion:frustrated"
+      ],
+      "optional": true,
+      "style": "frustrated"
+    },
+    {
+      "id": "conversation-01",
+      "category": "conversation",
+      "text": "Hello, it is good to hear from you. How has your week been?",
+      "instruction": "Speak as if starting a relaxed phone call.",
+      "dimensions": [
+        "greeting",
+        "turn-taking"
+      ],
+      "optional": false,
+      "style": "warm"
+    },
+    {
+      "id": "conversation-02",
+      "category": "conversation",
+      "text": "Yes, that works for me. Shall I bring something for lunch?",
+      "instruction": "Imagine replying to a friendly invitation.",
+      "dimensions": [
+        "response",
+        "follow-up"
+      ],
+      "optional": false,
+      "style": "casual"
+    },
+    {
+      "id": "conversation-03",
+      "category": "conversation",
+      "text": "Sorry, I missed the last part. Could you say the time again?",
+      "instruction": "Make a polite request for clarification.",
+      "dimensions": [
+        "repair",
+        "question"
+      ],
+      "optional": false,
+      "style": "casual"
+    },
+    {
+      "id": "conversation-04",
+      "category": "conversation",
+      "text": "Let me think for a moment. I believe we turned left after the bridge.",
+      "instruction": "Allow a short, natural thinking pause between sentences.",
+      "dimensions": [
+        "hesitation",
+        "recollection"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "conversation-05",
+      "category": "conversation",
+      "text": "Thanks for waiting. The kettle took a little longer than I expected.",
+      "instruction": "Speak as if returning with a cup of tea.",
+      "dimensions": [
+        "thanks",
+        "explanation"
+      ],
+      "optional": false,
+      "style": "warm"
+    },
+    {
+      "id": "conversation-06",
+      "category": "conversation",
+      "text": "I see what you mean, although I would probably choose the smaller one.",
+      "instruction": "Disagree gently at a normal volume.",
+      "dimensions": [
+        "disagreement",
+        "contrast"
+      ],
+      "optional": false,
+      "style": "casual"
+    },
+    {
+      "id": "conversation-07",
+      "category": "conversation",
+      "text": "For the soup, chop the carrot first. Then add it to the pan and stir slowly.",
+      "instruction": "Explain these steps clearly to one listener.",
+      "dimensions": [
+        "instruction",
+        "sequence"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "conversation-08",
+      "category": "conversation",
+      "text": "The address is twenty-four Willow Lane, and the appointment is at half past two.",
+      "instruction": "Read the numbers and time clearly, without exaggerated spacing.",
+      "dimensions": [
+        "numbers",
+        "time",
+        "information"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "conversation-09",
+      "category": "conversation",
+      "text": "I looked for the book upstairs. In the end, it was under the chair all along.",
+      "instruction": "Tell this tiny story with an easy pause between sentences.",
+      "dimensions": [
+        "narrative",
+        "phrasing"
+      ],
+      "optional": false,
+      "style": "casual"
+    },
+    {
+      "id": "conversation-10",
+      "category": "conversation",
+      "text": "That is everything for today. Take care, and I will speak to you soon.",
+      "instruction": "Close a conversation naturally.",
+      "dimensions": [
+        "farewell",
+        "turn-ending"
+      ],
+      "optional": false,
+      "style": "warm"
+    },
+    {
+      "id": "consistency-01",
+      "category": "consistency",
+      "text": "Please leave the green ticket beside the little blue tin.",
+      "instruction": "Repeat the first prompt in your ordinary voice. Do not try to imitate the earlier recording.",
+      "dimensions": [
+        "repeat:phonetic-01",
+        "consistency"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "consistency-02",
+      "category": "consistency",
+      "text": "Could you put it on the table when you have a moment?",
+      "instruction": "Repeat the earlier request at your comfortable normal pace.",
+      "dimensions": [
+        "repeat:connected-01",
+        "consistency"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "consistency-03",
+      "category": "consistency",
+      "text": "Did you leave the window open?",
+      "instruction": "Ask the same genuine question again, without exaggeration.",
+      "dimensions": [
+        "repeat:questions-01",
+        "consistency"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "consistency-04",
+      "category": "consistency",
+      "text": "The path curves gently round the garden.",
+      "instruction": "Return to your normal pitch after the optional variations.",
+      "dimensions": [
+        "repeat:range-01",
+        "baseline-return"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "consistency-05",
+      "category": "consistency",
+      "text": "There is a seat for you by the window.",
+      "instruction": "Use plain neutral delivery again, after the expression pairs.",
+      "dimensions": [
+        "repeat:expression-01",
+        "baseline-return"
+      ],
+      "optional": false,
+      "style": "neutral"
+    },
+    {
+      "id": "consistency-06",
+      "category": "consistency",
+      "text": "Please leave the green ticket beside the little blue tin.",
+      "instruction": "Take a comfortable pause first, then give one final natural reading.",
+      "dimensions": [
+        "repeat:phonetic-01",
+        "session-end"
+      ],
+      "optional": false,
+      "style": "neutral"
+    }
+  ]
+}

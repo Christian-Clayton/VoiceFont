@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>VoiceFont | Your local voice workspace</title>
+  <link rel="stylesheet" href="/calibration-assets/styles.css">
+  <script src="/calibration-assets/recorder.js" defer></script>
+  <script src="/calibration-assets/wav.js" defer></script>
+  <script src="/calibration-assets/app.js" defer></script>
+  <script src="/calibration-assets/experiments.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to workspace</a>
+<header class="topbar">
+  <a class="brand" href="/calibrate" aria-label="VoiceFont home"><span class="brand-mark" aria-hidden="true">vf</span>VoiceFont<span class="local-badge">LOCAL</span></a>
+  <nav aria-label="Workspace"><button id="nav-calibrate" class="nav-button active" aria-current="page">Calibrate</button><button id="nav-library" class="nav-button">Voice library</button><button id="nav-speech" class="nav-button">Create speech</button><a id="nav-experiments" class="nav-button" href="#experiments-panel">Acoustic ML</a></nav>
+  <span class="private-note">Your voice. On your machine.</span>
+</header>
+<div id="message" class="notice" role="status" aria-live="polite" hidden></div>
+<main id="main" tabindex="-1">
+<section id="view-calibrate" class="workspace" aria-label="Calibration workspace">
+  <aside class="sidebar">
+    <div class="eyebrow">RECORDING WORKSPACE</div><h1>Make room for<br>your voice.</h1>
+    <p class="muted">A few natural readings, one saved take at a time.</p>
+    <div class="progress-heading"><strong id="coverage-count">0 accepted</strong><span id="coverage-label">Not started</span></div>
+    <progress id="coverage" max="75" value="0" aria-label="Accepted prompt coverage"></progress>
+    <p id="coverage-detail" class="small muted">Loading your local checklist…</p>
+    <div id="checklist" class="checklist" aria-label="Prompt checklist"></div>
+    <p class="small muted">Coverage counts recordings, not measured vocal ability. Speak naturally; never imitate an accent.</p>
+  </aside>
+  <div class="workbench">
+    <section id="setup" class="panel" aria-labelledby="setup-title">
+      <div class="eyebrow">01 / SET UP</div><h2 id="setup-title">Start with a comfortable space.</h2>
+      <p>Choose a quiet room. Keep the microphone a steady distance away. Read normally and take a break whenever you need one.</p>
+      <form id="start-form">
+        <label for="session-name">Session name</label><input id="session-name" name="name" maxlength="128" required value="My voice" autocomplete="off">
+        <label for="session-mode">Recording order</label><select id="session-mode"><option value="full">Full checklist · in order</option><option value="adaptive">Balanced · quieter categories first</option></select>
+        <label class="check-label"><input id="consent" type="checkbox" required><span>I am recording my own voice, or have explicit permission to record and use this voice for local profiles and speech synthesis.</span></label>
+        <button id="start-session" class="primary" type="submit">Start recording session</button>
+      </form>
+      <div class="resume-area"><h3>Continue a saved session</h3><div id="sessions-list"><p class="muted">Loading sessions…</p></div><button id="refresh-sessions" class="quiet">Refresh sessions</button></div>
+    </section>
+    <section id="studio" hidden aria-labelledby="session-title">
+      <div class="studio-heading"><div><div class="eyebrow">02 / RECORD</div><h2 id="session-title">Your session</h2></div><button id="leave-session" class="quiet">Change session</button></div>
+      <article class="prompt-card">
+        <div class="prompt-meta"><span id="prompt-category">Sounds in everyday words</span><span id="prompt-index"></span></div>
+        <h3 id="prompt-title" class="eyebrow">READ ALOUD</h3>
+        <p id="prompt-text" class="prompt-text"></p>
+        <p id="prompt-instruction" class="delivery"></p>
+        <p id="prompt-dimensions" class="small muted"></p>
+        <div class="recording-strip"><span id="recording-indicator" class="recording-indicator" aria-hidden="true"></span><span id="recorder-status" role="status">Ready when you are</span><output id="recording-time" aria-label="Recording time">0:00</output><meter id="level" min="0" max="1" value="0" aria-label="Microphone signal level"></meter></div>
+        <div class="button-row"><button id="record" class="primary">Record</button><button id="stop" disabled>Stop</button><button id="replay" disabled>Replay</button><button id="save" class="primary" disabled>Save take &amp; next</button></div>
+        <audio id="take-audio" controls preload="metadata" aria-label="Replay current take" hidden></audio>
+        <div class="button-row secondary"><button id="rerecord" class="quiet" disabled>Re-record</button><button id="skip" class="quiet">Skip prompt</button><button id="next" class="quiet">Next prompt</button></div>
+        <details class="import-area"><summary>Use an existing WAV recording instead</summary><p class="small muted">An accessible alternative to live recording. Choose an authorised recording of this prompt: integer PCM WAV, mono or stereo, 8–96 kHz, 0.1–180 seconds, up to 50 MB. The server checks silence and clipping before accepting it.</p><label for="import-wav">Import WAV take</label><input id="import-wav" type="file" accept=".wav,audio/wav,audio/x-wav"></details>
+      </article>
+      <section class="takes-area" aria-labelledby="takes-title"><h3 id="takes-title">Saved takes for this prompt</h3><p class="small muted">Re-recording keeps earlier accepted audio. Select the take you prefer.</p><div id="takes-list"></div></section>
+      <section class="session-actions panel"><div><h3>Pause here or make a profile</h3><p class="muted small">Saved takes are already on this machine. Export a backup whenever you like. A partial profile needs 3 accepted prompts across 2 categories.</p></div><div class="button-row"><a id="export-session" class="button" download>Export backup</a><button id="show-finalize">Create voice profile</button></div>
+        <form id="finalize-form" hidden><label for="voice-id">Profile ID</label><input id="voice-id" pattern="[a-z0-9][a-z0-9_\-]{0,63}" maxlength="64" required placeholder="my-voice"><label for="voice-name">Display name</label><input id="voice-name" maxlength="128" required><p id="finalize-summary" class="small muted"></p><button class="primary" type="submit">Finalize profile</button><button id="cancel-finalize" type="button" class="quiet">Not yet</button></form>
+      </section>
+    </section>
+    <footer class="workspace-footer">LOCAL RECORDING · NO CLOUD UPLOADS <span>Stop if anything feels uncomfortable.</span></footer>
+  </div>
+</section>
+<section id="view-library" class="single-view" hidden aria-labelledby="library-title"><div class="eyebrow">YOUR LOCAL COLLECTION</div><h1 id="library-title">Voice library</h1><p class="muted">Profiles created from your authorised recordings. Raw takes stay with their calibration session.</p><div class="button-row"><button id="new-calibration" class="primary">Record a voice</button><button id="refresh-library">Refresh library</button></div><div id="profiles-list" class="library-list"></div></section>
+<section id="view-speech" class="single-view" hidden aria-labelledby="speech-title"><div class="eyebrow">TEXT TO AUDIO</div><h1 id="speech-title">Create speech</h1><p class="muted">Use a local voice profile with the provisioned speech engine. Results need your own listening assessment.</p><div id="capability" class="panel" role="status">Checking local speech engine…</div><form id="synthesis-form" class="panel"><label for="speech-voice">Voice profile</label><select id="speech-voice" required><option value="">Choose a profile</option></select><label for="speech-text">What should it say?</label><textarea id="speech-text" rows="6" maxlength="1000" required placeholder="Write something you would like to hear."></textarea><div class="field-footer"><span id="text-count">0 / 1,000 characters</span><span>Neutral style</span></div><label for="speech-speed">Speed <output id="speed-value">1.00×</output></label><input id="speech-speed" type="range" min="0.75" max="1.5" value="1" step="0.05"><div class="button-row"><button id="generate" class="primary" type="submit" disabled>Generate speech</button><button id="cancel-job" type="button" disabled>Cancel job</button></div></form><div id="job-panel" class="panel" hidden><h2>Speech output</h2><p id="job-status" role="status"></p><button id="check-job" class="quiet" hidden>Check job status</button><audio id="speech-audio" controls hidden aria-label="Generated speech"></audio><a id="download-speech" class="button" download="voicefont-speech.wav" hidden>Download WAV</a></div></section>
+<section id="experiments-panel" class="single-view" aria-labelledby="experiments-title" tabindex="-1">
+  <details id="experiments-details">
+    <summary id="experiments-title">Optional · Local acoustic ML experiment</summary>
+    <div class="panel">
+      <h2>Train a small acoustic reconstruction model</h2>
+      <p>This is real scikit-learn training orchestrated by LangGraph and tracked by local MLflow. It is <strong>not TTS, voice cloning or speaker identity training</strong>, and does not change your speech profiles.</p>
+      <p class="small muted">At least 8 distinct selected original WAVs are required. Identical audio counts once. A fixed 25% original-recording holdout is kept out of fitting; no windows from one recording cross the split. Small within-session results do not establish voice quality or generalisation.</p>
+      <p id="experiment-capability" role="status">Open this section to check local ML setup.</p>
+      <form id="experiment-form">
+        <label for="experiment-session">Saved calibration session</label>
+        <select id="experiment-session" required><option value="">Choose a saved session</option></select>
+        <button id="experiment-refresh-sessions" type="button" class="quiet">Refresh saved sessions</button>
+        <label class="check-label"><input id="experiment-consent" type="checkbox" required><span>I authorise local acoustic model training on this session's selected recordings. Features, metrics and any accepted numeric model will remain on this machine.</span></label>
+        <button id="experiment-train" type="submit" class="primary" disabled>Train local acoustic model</button>
+      </form>
+    </div>
+    <section id="experiment-output" class="panel" hidden aria-labelledby="experiment-output-title">
+      <h2 id="experiment-output-title">Experiment result</h2>
+      <p id="experiment-status" role="status" aria-live="polite"></p>
+      <p id="experiment-id" class="small muted"></p>
+      <button id="experiment-check" type="button" class="quiet">Check status</button>
+      <div id="experiment-results" hidden>
+        <dl><dt>Heldout reconstruction MSE</dt><dd id="experiment-mse"></dd><dt>Training-mean baseline MSE</dt><dd id="experiment-baseline"></dd><dt>Quality gate</dt><dd id="experiment-gate"></dd><dt>Split and feature extraction</dt><dd id="experiment-split"></dd><dt>Executed graph stages</dt><dd id="experiment-stages"></dd><dt>Local MLflow run</dt><dd id="experiment-run"></dd></dl>
+        <p class="small muted">MSE uses train-standardised acoustic features. Passing requires heldout MSE ≤ 0.5 and ≤ 50% of the training-mean baseline. A rejection is a real result, not an error; no model is published on rejection. Repeating this fixed holdout is not an independent test.</p>
+      </div>
+    </section>
+    <p id="experiment-error" class="notice" role="alert" hidden></p>
+  </details>
+</section>
+</main>
+<noscript><p class="notice">Enable JavaScript in this local page to record audio and manage sessions.</p></noscript>
+</body>
+</html>
