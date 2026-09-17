@@ -1,0 +1,8 @@
+{
+  "kind": "synthetic_ljspeech_format",
+  "count": 50,
+  "sample_rate": 22050,
+  "duration_sec": 1.5,
+  "purpose": "Pipeline smoke test only - not real speech",
+  "disclaimer": "Synthetic data validates training mechanics. Real TTS quality requires real speech."
+}

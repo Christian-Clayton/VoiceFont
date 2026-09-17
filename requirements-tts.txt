@@ -1,0 +1,6 @@
+# TTS training environment - extends the base VoiceFont environment.
+# Use: .venv-embed/Scripts/pip install -r requirements-tts.txt
+TTS==0.22.0
+mlflow==2.21.3
+langgraph==0.3.31
+weaviate-client==4.12.0

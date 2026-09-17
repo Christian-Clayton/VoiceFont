@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+*.so
+*.dylib
+*.dll
+data/cluster-tools/*.exe
+data/embeddings/embedding_model.ckpt
+data/openvoice-runtime/.venv-openvoice/
+training/tts_output/
+!training/tts_output/.gitkeep
+.mypy_cache/
+.ruff_cache/

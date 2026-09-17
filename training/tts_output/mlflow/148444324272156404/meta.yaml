@@ -1,0 +1,6 @@
+artifact_location: file:C:\Projects\VoiceFont\training\tts_output\mlflow/148444324272156404
+creation_time: 1789684078107
+experiment_id: '148444324272156404'
+last_update_time: 1789684078107
+lifecycle_stage: active
+name: voicefont-tts-text2mel
