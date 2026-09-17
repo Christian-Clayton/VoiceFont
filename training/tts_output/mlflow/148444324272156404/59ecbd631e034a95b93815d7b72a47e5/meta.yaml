@@ -1,0 +1,15 @@
+artifact_uri: file:C:\Projects\VoiceFont\training\tts_output\mlflow/148444324272156404/59ecbd631e034a95b93815d7b72a47e5/artifacts
+end_time: 1789685992738
+entry_point_name: ''
+experiment_id: '148444324272156404'
+lifecycle_stage: active
+run_id: 59ecbd631e034a95b93815d7b72a47e5
+run_name: e2e_verify
+run_uuid: 59ecbd631e034a95b93815d7b72a47e5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1789685989975
+status: 3
+tags: []
+user_id: Chris

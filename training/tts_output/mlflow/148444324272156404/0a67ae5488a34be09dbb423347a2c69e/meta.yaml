@@ -1,0 +1,15 @@
+artifact_uri: file:C:\Projects\VoiceFont\training\tts_output\mlflow/148444324272156404/0a67ae5488a34be09dbb423347a2c69e/artifacts
+end_time: 1789686159822
+entry_point_name: ''
+experiment_id: '148444324272156404'
+lifecycle_stage: active
+run_id: 0a67ae5488a34be09dbb423347a2c69e
+run_name: tts_text2mel_smoke
+run_uuid: 0a67ae5488a34be09dbb423347a2c69e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1789686158369
+status: 3
+tags: []
+user_id: Chris

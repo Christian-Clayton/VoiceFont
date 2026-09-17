@@ -3,19 +3,17 @@ from __future__ import annotations
 
 import json
 import logging
-import re
 import uuid
 from urllib.parse import urlsplit
 
 import httpx
 
-from voicefont.embeddings import EMBEDDING_VERSION, require_consent, validate_embedding
+from voicefont.embeddings import require_consent, validate_embedding
 
 logger = logging.getLogger(__name__)
 
 COLLECTION = "VoiceFontSpeakerEcapaV1"
 DEFAULT_ENDPOINT = "http://127.0.0.1:18080"
-MAX_RESPONSE_BYTES = 1024 * 1024
 
 
 class VectorStoreError(RuntimeError):
@@ -23,43 +21,37 @@ class VectorStoreError(RuntimeError):
 
 
 class WeaviateVoiceStore:
-    """Store speaker embeddings in Weaviate with consent and provenance."""
+    """Store speaker embeddings in Weaviate with consent and provenance.
 
-    def __init__(self, endpoint: str = DEFAULT_ENDPOINT, *, timeout: float = 5.0,
-                 transport=None):
+    Uses direct REST API to avoid Python client compatibility issues.
+    """
+
+    def __init__(self, endpoint: str = DEFAULT_ENDPOINT):
         parsed = urlsplit(endpoint)
         if (parsed.scheme != "http" or parsed.hostname not in ("127.0.0.1", "::1")
                 or parsed.username or parsed.password
                 or parsed.path not in ("", "/") or parsed.query or parsed.fragment
                 or not parsed.port):
             raise ValueError("loopback HTTP endpoint required")
-        self.client = httpx.Client(base_url=endpoint.rstrip("/"), timeout=timeout,
-                                   trust_env=False, follow_redirects=False,
-                                   transport=transport)
+        self.endpoint = endpoint.rstrip("/")
+        self.client = httpx.Client(base_url=self.endpoint, timeout=5.0,
+                                   trust_env=False, follow_redirects=False)
 
     def _request(self, method, path, body=None, *, missing_ok=False):
         try:
-            with self.client.stream(method, path, json=body) as resp:
-                if resp.status_code == 404 and missing_ok:
-                    return None
-                if not 200 <= resp.status_code < 300:
-                    raise VectorStoreError(f"HTTP {resp.status_code}")
-                data = bytearray()
-                for chunk in resp.iter_bytes():
-                    data.extend(chunk)
-                    if len(data) > MAX_RESPONSE_BYTES:
-                        raise VectorStoreError("response too large")
-                return json.loads(data) if data else {}
-        except (httpx.HTTPError, ValueError) as e:
+            resp = self.client.request(method, path, json=body)
+            if resp.status_code == 404 and missing_ok:
+                return None
+            if not 200 <= resp.status_code < 300:
+                raise VectorStoreError(f"HTTP {resp.status_code}: {resp.text[:200]}")
+            return resp.json() if resp.text else {}
+        except httpx.HTTPError as e:
             raise VectorStoreError(f"Weaviate unavailable: {type(e).__name__}") from e
 
     def ensure_collection(self):
-        """Create the collection with vectorizer=none (caller provides vectors)."""
+        """Create collection with vectorizer=none (caller provides vectors)."""
         schema = self._request("GET", f"/v1/schema/{COLLECTION}", missing_ok=True)
         if schema:
-            cfg = schema.get("vectorIndexConfig", {})
-            if cfg.get("distance") != "cosine":
-                raise VectorStoreError("existing collection has wrong distance metric")
             if schema.get("vectorizer") != "none":
                 raise VectorStoreError("existing collection has wrong vectorizer")
             return schema
@@ -78,8 +70,7 @@ class WeaviateVoiceStore:
             ],
             "vectorIndexConfig": {"distance": "cosine"},
         }
-        self._request("POST", "/v1/schema", body)
-        return body
+        return self._request("POST", "/v1/schema", body)
 
     def insert(self, *, vector: list, version: str, consent: bool,
                profile_id: str, audio_sha256: str, device: str = "cuda:0",
@@ -116,47 +107,42 @@ class WeaviateVoiceStore:
             raise ValueError("limit must be 1-100")
         self.ensure_collection()
 
-        # Build filter operands
+        # Build GraphQL filter
         operands = [
-            '{"path": ["consent"], "operator": "Equal", "valueBoolean": true}',
             '{"path": ["embeddingVersion"], "operator": "Equal", "valueText": "%s"}' % version,
+            '{"path": ["consent"], "operator": "Equal", "valueBoolean": true}',
         ]
         if profile_id:
             operands.append(
                 '{"path": ["profileId"], "operator": "NotEqual", "valueText": "%s"}' % profile_id
             )
 
-        query = {
-            "query": """
-            {
-                Get {
-                    %s(
-                        nearVector: {vector: [%s]}
-                        limit: %d
-                        where: {
-                            operator: And
-                            operands: [%s]
-                        }
-                    ) {
-                        profileId
-                        audioSha256
-                        device
-                        durationSeconds
-                        inferenceMs
-                        _additional { distance }
-                    }
+        vec_str = ",".join(str(v) for v in vector)
+        query = """
+        {
+            Get {
+                %s(
+                    nearVector: {vector: [%s]}
+                    limit: %d
+                    where: {operator: And, operands: [%s]}
+                ) {
+                    profileId
+                    audioSha256
+                    device
+                    _additional { distance }
                 }
             }
-            """ % (COLLECTION, ",".join(str(v) for v in vector), limit, ", ".join(operands))
         }
-        result = self._request("POST", "/v1/graphql", query)
-        objects = result.get("data", {}).get("Get", {}).get(COLLECTION, [])
+        """ % (COLLECTION, vec_str, limit, ", ".join(operands))
+
+        body = self._request("POST", "/v1/graphql", {"query": query})
+        objects = body.get("data", {}).get("Get", {}).get(COLLECTION, [])
         return [
             {
                 "profileId": o.get("profileId"),
                 "audioSha256": o.get("audioSha256"),
                 "device": o.get("device"),
-                "distance": o.get("_additional", {}).get("distance"),
+                "distance": (o.get("_additional") or {}).get("distance"),
             }
             for o in objects
         ]
