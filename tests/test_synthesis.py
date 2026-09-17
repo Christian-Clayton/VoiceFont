@@ -68,7 +68,7 @@ def test_job_contract_and_download(setup_service):
     assert response.status_code == 202
     job = wait_job(service, response.json()["id"])
     assert job["status"] == "completed"
-    assert set(job) == {"id", "status", "audio_url"}
+    assert set(job) == {"id", "status", "tone", "audio_url"}
     assert str(root) not in json.dumps(job)
     audio = client.get(job["audio_url"])
     assert audio.status_code == 200

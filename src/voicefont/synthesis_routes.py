@@ -16,6 +16,11 @@ from .request_body import read_json
 from .synthesis import SynthesisError, SynthesisService
 
 
+class ToneRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    text: str = Field(min_length=1, max_length=1000)
+
+
 class SpeechRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     voice_id: str = Field(min_length=1, max_length=64, pattern=r"^[a-z0-9][a-z0-9_-]*$")
@@ -64,6 +69,11 @@ def create_synthesis_router(
     @router.get("/capabilities")
     def capabilities():
         return service.capability()
+
+    @router.post("/tone")
+    async def tone(request: Request):
+        body = await read_json(request, ToneRequest)
+        return await run_in_threadpool(service.analyze, body.text)
 
     @router.post("/jobs", status_code=202)
     async def submit(request: Request):

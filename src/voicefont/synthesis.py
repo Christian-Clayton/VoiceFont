@@ -115,7 +115,7 @@ class OpenVoiceBackend:
     def __init__(self, config_path: str | Path | None = None):
         self.config_path = Path(config_path or default_config_path())
 
-    def capability(self) -> dict:
+    def capability(self):
         return synthesis_capabilities(self.config_path)
 
     def run(
@@ -182,6 +182,7 @@ class _Job:
     fixture: Path | None = None
     status: str = "queued"
     error: str | None = None
+    tone: dict | None = None
     cancel: threading.Event = field(default_factory=threading.Event)
     done: threading.Event = field(default_factory=threading.Event)
 
@@ -191,6 +192,9 @@ class _Job:
             value["error"] = self.error
         if self.status == "completed":
             value["audio_url"] = f"/synthesis/jobs/{self.id}/audio"
+            # Tone describes the delivered speech; failures stay minimal and generic.
+            if self.tone is not None:
+                value["tone"] = self.tone
         return value
 
 
@@ -222,6 +226,13 @@ class SynthesisService:
             if self._unavailable:
                 return {**capability, "available": False, "message": self._unavailable}
         return capability
+
+    @staticmethod
+    def analyze(text: str) -> dict:
+        """Deterministic tone analysis of text; no synthesis and no network."""
+        from .tone import analyze
+
+        return analyze(text)
 
     @staticmethod
     def _validate(text, style, speed):
@@ -287,7 +298,10 @@ class SynthesisService:
             job_id = str(uuid.uuid4())
             directory = self.output_root / job_id
             directory.mkdir()
+            from .tone import analyze
+
             job = _Job(job_id, directory, text, speed, voice_id, fixture)
+            job.tone = analyze(text)
             self._jobs[job_id] = job
             if self._thread is None:
                 self._thread = threading.Thread(
