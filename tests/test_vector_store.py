@@ -8,7 +8,13 @@ from voicefont.embeddings import EMBEDDING_VERSION
 from voicefont.vector_store import WeaviateStore
 
 
-@pytest.mark.parametrize('endpoint', ['https://example.com', 'http://localhost:8080', 'http://127.0.0.1:8080/path', 'http://user:pass@127.0.0.1:8080', 'http://0.0.0.0:8080'])
+@pytest.mark.parametrize('endpoint', [
+    'https://example.com',
+    'http://localhost:8080',
+    'http://127.0.0.1:8080/path',
+    'http://user:pass@127.0.0.1:8080',
+    'http://0.0.0.0:8080',
+])
 def test_only_explicit_loopback_endpoints(endpoint):
     with pytest.raises(ValueError):
         WeaviateStore(endpoint)
@@ -50,6 +56,8 @@ def test_query_limit_bounded(limit):
 
 
 def test_redirects_not_followed():
-    with WeaviateStore(transport=httpx.MockTransport(lambda _: httpx.Response(302, headers={'location': 'https://example.com'}))) as store:
+    with WeaviateStore(transport=httpx.MockTransport(lambda _: httpx.Response(
+            302, headers={'location': 'https://example.com'}
+        ))) as store:
         with pytest.raises(RuntimeError):
             store.ensure_collection()

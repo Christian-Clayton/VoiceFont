@@ -1,18 +1,19 @@
 """Verify Coqui TTS training setup before running full training."""
 import sys
+
 sys.path.insert(0, 'src')
 
 import torch
 import TTS
+
 print(f'TTS version: {TTS.__version__}')
 print(f'CUDA available: {torch.cuda.is_available()}')
 
+
+from trainer import Trainer
 from TTS.tts.configs.vits_config import VitsConfig
-from TTS.tts.models import setup_model
-from TTS.utils.audio import AudioProcessor
 from TTS.tts.datasets import load_tts_samples
-from trainer import Trainer, TrainerArgs
-import os
+from TTS.tts.models import setup_model
 
 # Build config
 vcfg = VitsConfig(
@@ -54,8 +55,9 @@ print(f'Model: {type(model).__name__}, params: {sum(p.numel() for p in model.par
 
 # Check Trainer API
 import inspect
+
 print(f'Trainer __init__ sig: {inspect.signature(Trainer.__init__)}')
 print(f'Trainer has fit: {hasattr(Trainer, "fit")}')
 if hasattr(Trainer, 'callbacks'):
-    print(f'Trainer has callbacks attr')
+    print('Trainer has callbacks attr')
 print('Setup OK')

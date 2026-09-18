@@ -4,8 +4,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import urllib.request
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_REV = '1464ca7a7269f8c2c07c94a63455216a38836dca'

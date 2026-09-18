@@ -1,7 +1,12 @@
 """Small validation tests; generated vectors are not speaker-quality evidence."""
 import pytest
 
-from voicefont.embeddings import EMBEDDING_DIM, EMBEDDING_VERSION, validate_embedding, require_consent
+from voicefont.embeddings import (
+    EMBEDDING_DIM,
+    EMBEDDING_VERSION,
+    require_consent,
+    validate_embedding,
+)
 
 
 def test_valid_embedding_is_normalized():

@@ -1,6 +1,13 @@
 """End-to-end verification: training → embeddings → Weaviate → pipeline."""
 import sys
+from pathlib import Path
+
 sys.path.insert(0, 'src')
+
+from voicefont.embeddings import CudaSpeakerEncoder
+from voicefont.tts_pipeline import run_tts_pipeline
+from voicefont.tts_training import TtsTrainingConfig, train_text2mel
+from voicefont.voice_store import WeaviateVoiceStore
 
 print("=" * 60)
 print("VoiceFont GPU Showcase - End-to-End Verification")
@@ -8,7 +15,7 @@ print("=" * 60)
 
 # 1. TTS Training
 print("\n[1/4] TTS CUDA Training...")
-from voicefont.tts_training import TtsTrainingConfig, train_text2mel
+
 config = TtsTrainingConfig(run_name="e2e_verify", num_epochs=3)
 result = train_text2mel(config)
 print(f"  Run ID: {result.run_id}")
@@ -21,7 +28,7 @@ assert result.peak_vram_mb > 0, "VRAM should be tracked"
 
 # 2. LangGraph Pipeline
 print("\n[2/4] LangGraph Pipeline...")
-from voicefont.tts_pipeline import run_tts_pipeline
+
 pipeline_result = run_tts_pipeline(config={"num_epochs": 2})
 print(f"  Status: {pipeline_result['status']}")
 print(f"  Stages: {pipeline_result['stages']}")
@@ -30,8 +37,7 @@ assert 'train' in pipeline_result['stages']
 
 # 3. Speaker Embeddings (CUDA)
 print("\n[3/4] Speaker Embedding Extraction...")
-from voicefont.embeddings import CudaSpeakerEncoder
-from pathlib import Path
+
 data = Path('data/embeddings')
 with CudaSpeakerEncoder(data, consent=True) as enc:
     r = enc.encode(data / 'fixtures' / 'kathleen' / '0.wav', consent=True)
@@ -45,7 +51,7 @@ with CudaSpeakerEncoder(data, consent=True) as enc:
 
 # 4. Weaviate Vector Store
 print("\n[4/4] Weaviate Vector Store...")
-from voicefont.voice_store import WeaviateVoiceStore
+
 store = WeaviateVoiceStore('http://127.0.0.1:18080')
 store.ensure_collection()
 

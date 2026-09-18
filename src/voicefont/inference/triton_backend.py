@@ -33,7 +33,7 @@ class StreamingInferenceBackend:
 
     def initialize(self, args: dict) -> None:
         """Initialize the model. Called once when Triton loads the backend."""
-        model_config = json.loads(args["model_config"])
+        json.loads(args["model_config"])
 
         # Load config from model directory
         model_instance_name = args.get("model_instance_name", "streaming_model")

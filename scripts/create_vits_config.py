@@ -1,9 +1,5 @@
 """Use Coqui's train_tts.py directly with a config file."""
-import os
 import json
-import tempfile
-import subprocess
-import sys
 
 # Create VITS training config
 config = {

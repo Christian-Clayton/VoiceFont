@@ -9,7 +9,6 @@ Tacotron2 + HiFi-GAN pipeline trained on thousands of hours of speech.
 """
 from __future__ import annotations
 
-import json
 import logging
 import time
 from dataclasses import asdict, dataclass
@@ -18,7 +17,6 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 logger = logging.getLogger(__name__)
@@ -111,7 +109,7 @@ def load_dataset_ljspeech(dataset_dir: str):
     meta = ds / "metadata.csv"
     wavs = ds / "wavs"
     records = []
-    with open(meta, "r", encoding="utf-8") as f:
+    with open(meta, encoding="utf-8") as f:
         reader = csv.reader(f, delimiter="|")
         for row in reader:
             if len(row) < 2:

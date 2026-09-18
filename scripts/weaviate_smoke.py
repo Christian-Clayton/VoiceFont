@@ -1,8 +1,10 @@
 """Quick Weaviate search smoke test using real ECAPA embedding."""
 import sys
+
 sys.path.insert(0, 'src')
 
 from pathlib import Path
+
 from voicefont.embeddings import CudaSpeakerEncoder
 from voicefont.voice_store import WeaviateVoiceStore
 

@@ -1,8 +1,10 @@
 """End-to-end test of the streaming engine with a custom model."""
 import sys
+
 sys.path.insert(0, 'src')
 
 import time
+
 import torch
 import torch.nn as nn
 
@@ -44,10 +46,7 @@ def test_streaming():
     print(f"Model: {total_params:,} params")
 
     # Split into StreamingModel components
-    embed_tokens = model.embedding
-    norm = model.norm
-    lm_head = model.head
-    layers = list(model.layers)
+    list(model.layers)
 
     # Standard forward
     model = model.to(device).eval()

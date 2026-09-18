@@ -6,13 +6,11 @@ from __future__ import annotations
 
 import logging
 import time
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, TypedDict
+from typing import TypedDict
 
 from langgraph.graph import END, StateGraph
 
-from voicefont.tts_training import TtsTrainingConfig, train_text2mel, TtsTrainingResult
+from voicefont.tts_training import TtsTrainingConfig, train_text2mel
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +33,7 @@ def build_tts_pipeline():
     def preprocess_node(state: TtsPipelineState) -> TtsPipelineState:
         """Validate dataset and prepare for training."""
         logger.info("Stage: preprocess")
-        dataset_dir = state.get("dataset_dir", "training/piper_dataset")
+        state.get("dataset_dir", "training/piper_dataset")
         # Validation happens inside train_text2mel
         return {
             **state,
@@ -46,7 +44,7 @@ def build_tts_pipeline():
     def train_node(state: TtsPipelineState) -> TtsPipelineState:
         """Run CUDA training with MLflow tracking."""
         logger.info("Stage: train")
-        started = time.time()
+        time.time()
         try:
             config_dict = state.get("config", {})
             config = TtsTrainingConfig(**config_dict)

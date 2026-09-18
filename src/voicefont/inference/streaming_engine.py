@@ -15,12 +15,13 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Optional
 
 import torch
 import torch.nn as nn
 
 logger = logging.getLogger(__name__)
+
+_DEFAULT_DEVICE = torch.device("cuda:0")
 
 
 class StreamingModel:
@@ -35,7 +36,7 @@ class StreamingModel:
         norm: nn.Module,
         lm_head: nn.Module,
         layers: list[nn.Module],
-        device: torch.device = torch.device("cuda:0"),
+        device: torch.device = _DEFAULT_DEVICE,
         dtype: torch.dtype = torch.float16,
     ):
         self.device = device
@@ -68,7 +69,7 @@ class StreamingModel:
     def forward(
         self,
         input_ids: torch.Tensor,
-        attention_mask: Optional[torch.Tensor] = None,
+        attention_mask: torch.Tensor | None = None,
         **kwargs,
     ) -> torch.Tensor:
         """Forward pass with layer streaming.
@@ -105,14 +106,14 @@ class StreamingModel:
     def from_pretrained(
         cls,
         model_path: str | Path,
-        device: torch.device = torch.device("cuda:0"),
+        device: torch.device = _DEFAULT_DEVICE,
         dtype: torch.dtype = torch.float16,
-    ) -> "StreamingModel":
+    ) -> StreamingModel:
         """Load a HuggingFace model for streaming inference.
 
         Loads everything to CPU first, then StreamingModel moves layers to GPU as needed.
         """
-        from transformers import AutoConfig, AutoModelForCausalLM
+        from transformers import AutoModelForCausalLM
 
         logger.info(f"Loading model from {model_path}...")
         model = AutoModelForCausalLM.from_pretrained(
@@ -163,7 +164,10 @@ class StreamingModel:
             for p in layer.parameters():
                 total += p.nelement() * p.element_size()
         # Subtract largest layer since it's counted in peak
-        max_layer = max(sum(p.nelement() * p.element_size() for p in layer.parameters()) for layer in self.layers) if self.layers else 0
+        max_layer = max(
+            sum(p.nelement() * p.element_size() for p in layer.parameters())
+            for layer in self.layers
+        ) if self.layers else 0
         total -= max_layer
         return total
 

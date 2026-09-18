@@ -1,7 +1,6 @@
 """Weaviate-backed voice embedding store with explicit consent and no auto-vectorizer."""
 from __future__ import annotations
 
-import json
 import logging
 import uuid
 from urllib.parse import urlsplit
@@ -109,31 +108,31 @@ class WeaviateVoiceStore:
 
         # Build GraphQL filter
         operands = [
-            '{"path": ["embeddingVersion"], "operator": "Equal", "valueText": "%s"}' % version,
+            f'{{"path": ["embeddingVersion"], "operator": "Equal", "valueText": "{version}"}}',
             '{"path": ["consent"], "operator": "Equal", "valueBoolean": true}',
         ]
         if profile_id:
             operands.append(
-                '{"path": ["profileId"], "operator": "NotEqual", "valueText": "%s"}' % profile_id
+                f'{{"path": ["profileId"], "operator": "NotEqual", "valueText": "{profile_id}"}}'
             )
 
         vec_str = ",".join(str(v) for v in vector)
-        query = """
-        {
-            Get {
-                %s(
-                    nearVector: {vector: [%s]}
-                    limit: %d
-                    where: {operator: And, operands: [%s]}
-                ) {
+        query = f"""
+        {{
+            Get {{
+                {COLLECTION}(
+                    nearVector: {{vector: [{vec_str}]}}
+                    limit: {limit}
+                    where: {{operator: And, operands: [{", ".join(operands)}]}}
+                ) {{
                     profileId
                     audioSha256
                     device
-                    _additional { distance }
-                }
-            }
-        }
-        """ % (COLLECTION, vec_str, limit, ", ".join(operands))
+                    _additional {{ distance }}
+                }}
+            }}
+        }}
+        """
 
         body = self._request("POST", "/v1/graphql", {"query": query})
         objects = body.get("data", {}).get("Get", {}).get(COLLECTION, [])

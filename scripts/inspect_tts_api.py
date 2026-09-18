@@ -1,15 +1,15 @@
 """Inspect TTS model to understand training API."""
 import sys
+
 sys.path.insert(0, 'src')
 
-import torch
 import TTS
+
 print(f'TTS version: {TTS.__version__}')
 
 from TTS.tts.configs.vits_config import VitsConfig
 from TTS.tts.models.vits import Vits
 from TTS.utils.audio import AudioProcessor
-from TTS.tts.datasets import load_tts_samples
 
 # Build config
 vcfg = VitsConfig(
@@ -41,11 +41,13 @@ print(f'Has forward: {hasattr(model, "forward")}')
 
 # Try to understand the training API
 import inspect
+
 print(f'\noptimize signature: {inspect.signature(model.optimize)}')
 print(f'forward signature: {inspect.signature(model.forward)}')
 
 # Check Coqui TTS bin for training scripts
 import os
+
 tts_path = os.path.dirname(TTS.__file__)
 print(f'\nTTS path: {tts_path}')
 print(f'Bin contents: {os.listdir(os.path.join(tts_path, "bin"))}')
