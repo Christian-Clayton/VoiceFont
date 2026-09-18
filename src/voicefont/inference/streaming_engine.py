@@ -36,16 +36,16 @@ class StreamingModel:
         norm: nn.Module,
         lm_head: nn.Module,
         layers: list[nn.Module],
-        device: torch.device = _DEFAULT_DEVICE,
-        dtype: torch.dtype = torch.float16,
+        device: torch.device | None = None,
+        dtype: torch.dtype | None = None,
     ):
-        self.device = device
-        self.dtype = dtype
+        self.device = device if device is not None else _DEFAULT_DEVICE
+        self.dtype = dtype if dtype is not None else torch.float16
 
         # Small components stay resident in VRAM
-        self.embed_tokens = embed_tokens.to(device=device, dtype=dtype).eval()
-        self.norm = norm.to(device=device, dtype=dtype).eval()
-        self.lm_head = lm_head.to(device=device, dtype=dtype).eval()
+        self.embed_tokens = embed_tokens.to(device=self.device, dtype=self.dtype).eval()
+        self.norm = norm.to(device=self.device, dtype=self.dtype).eval()
+        self.lm_head = lm_head.to(device=self.device, dtype=self.dtype).eval()
 
         # Layers live in CPU RAM; moved to GPU one at a time during forward
         self.layers = []
@@ -106,13 +106,15 @@ class StreamingModel:
     def from_pretrained(
         cls,
         model_path: str | Path,
-        device: torch.device = _DEFAULT_DEVICE,
-        dtype: torch.dtype = torch.float16,
+        device: torch.device | None = None,
+        dtype: torch.dtype | None = None,
     ) -> StreamingModel:
         """Load a HuggingFace model for streaming inference.
 
         Loads everything to CPU first, then StreamingModel moves layers to GPU as needed.
         """
+        device = device if device is not None else _DEFAULT_DEVICE
+        dtype = dtype if dtype is not None else torch.float16
         from transformers import AutoModelForCausalLM
 
         logger.info(f"Loading model from {model_path}...")
