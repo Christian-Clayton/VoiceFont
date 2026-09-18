@@ -8,15 +8,19 @@
   --surface: #fcfbf8;
   --border: rgba(45, 45, 45, 0.1);
   --border-subtle: rgba(45, 45, 45, 0.06);
+
   --text: #2d2d2d;
   --text-secondary: #575757;
   --text-muted: #8a8a8a;
+
   --gold: #b89a57;
   --gold-soft: rgba(184, 154, 87, 0.14);
   --gold-line: rgba(184, 154, 87, 0.45);
+
   --radius-sm: 8px;
   --radius: 10px;
   --radius-lg: 14px;
+
   --serif-tracking: -0.01em;
 }
 
@@ -34,13 +38,16 @@ body {
     radial-gradient(120% 90% at 50% 8%, rgba(45, 45, 45, 0) 55%, rgba(45, 45, 45, 0.05) 100%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.025 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-attachment: fixed, fixed;
+  overflow: hidden;
 }
 
 h1, h2, h3 { font-weight: 600; letter-spacing: var(--serif-tracking); margin: 0; color: var(--text); }
 p { margin: 0; }
 button, input, select { font-family: inherit; }
 
-/* Layout — shell is pinned to the viewport */
+/* ---------------------------------------------------------------------- */
+/* Layout — shell is pinned to the viewport; only the view area scrolls   */
+/* ---------------------------------------------------------------------- */
 .wrap {
   max-width: 1180px; margin: 0 auto; padding: 0 32px;
   height: 100vh; height: 100dvh;
@@ -48,7 +55,9 @@ button, input, select { font-family: inherit; }
 }
 .view { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-bottom: 32px; }
 
-/* Navigation */
+/* ---------------------------------------------------------------------- */
+/* Navigation                                                              */
+/* ---------------------------------------------------------------------- */
 .nav {
   padding: 28px 0 40px;
   display: flex; align-items: center; justify-content: flex-end;
@@ -62,7 +71,9 @@ button, input, select { font-family: inherit; }
 .nav-link:hover { color: var(--text); }
 .nav-link.active { color: var(--text); border-bottom-color: var(--gold); }
 
-/* Hero / splash */
+/* ---------------------------------------------------------------------- */
+/* Hero / Splash                                                           */
+/* ---------------------------------------------------------------------- */
 .hero {
   display: grid; grid-template-columns: 5fr 7fr; gap: 56px; align-items: center;
   min-height: 100%; padding: 8px 0 24px;
@@ -74,8 +85,11 @@ button, input, select { font-family: inherit; }
 .hero-title { font-size: clamp(2.4rem, 4.4vw, 3.6rem); line-height: 1.05; margin-bottom: 20px; }
 .hero-subtitle { font-size: 17px; color: var(--text-secondary); max-width: 40ch; margin-bottom: 34px; }
 .hero-actions { display: flex; align-items: center; gap: 22px; }
+.hero-illustration { width: 100%; height: auto; }
 
-/* Buttons */
+/* ---------------------------------------------------------------------- */
+/* Buttons                                                                 */
+/* ---------------------------------------------------------------------- */
 .btn {
   font-size: 14px; font-weight: 500; border-radius: var(--radius); padding: 12px 22px;
   cursor: pointer; transition: background-color .18s ease, color .18s ease, border-color .18s ease;
@@ -96,7 +110,9 @@ button, input, select { font-family: inherit; }
 }
 .btn.link:hover { color: var(--text); text-decoration-color: var(--gold); }
 
-/* Panels / cards */
+/* ---------------------------------------------------------------------- */
+/* Panels / cards                                                          */
+/* ---------------------------------------------------------------------- */
 .panel {
   background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
   padding: 28px; margin-bottom: 20px;
@@ -140,7 +156,9 @@ button, input, select { font-family: inherit; }
 .step-back span { font-size: 14px; color: var(--gold); }
 .step-back:hover { color: var(--text); }
 
-/* Scoreboard */
+/* ---------------------------------------------------------------------- */
+/* Scoreboard                                                              */
+/* ---------------------------------------------------------------------- */
 .scoreboard { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
 .score {
   background: var(--surface); border: 1px solid var(--border-subtle); border-left: 3px solid transparent;
@@ -151,7 +169,9 @@ button, input, select { font-family: inherit; }
 .score .num { font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--text); }
 .score.active { border-left-color: var(--gold); }
 
-/* Turn banner / status */
+/* ---------------------------------------------------------------------- */
+/* Turn banner / status                                                    */
+/* ---------------------------------------------------------------------- */
 .turn-banner {
   background: var(--bg-alt); border: 1px solid var(--border-subtle); border-radius: var(--radius);
   padding: 14px 18px; margin-bottom: 18px; display: flex; align-items: center; gap: 12px;
@@ -165,7 +185,9 @@ button, input, select { font-family: inherit; }
   border-left: 3px solid var(--gold); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 16px; font-size: 13px;
 }
 
-/* Matrix board */
+/* ---------------------------------------------------------------------- */
+/* Matrix board                                                            */
+/* ---------------------------------------------------------------------- */
 .grid-area { display: grid; gap: 8px; align-items: stretch; }
 .corner { background: transparent; }
 .col-btn, .row-btn {
@@ -203,143 +225,22 @@ button, input, select { font-family: inherit; }
 
 .thinking { color: var(--gold); font-size: 13px; margin-left: auto; }
 
-/* About / Learn */
+/* ---------------------------------------------------------------------- */
+/* About / Learn                                                           */
+/* ---------------------------------------------------------------------- */
 .prose { max-width: 68ch; color: var(--text-secondary); font-size: 15px; }
 .prose + .prose { margin-top: 14px; }
 
-/* Motion */
+/* ---------------------------------------------------------------------- */
+/* Motion — subtle only                                                    */
+/* ---------------------------------------------------------------------- */
 .fade-in { animation: fadeIn .5s ease both; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ====================================================================== */
-/* VoiceFont-specific classes                                            */
-/* ====================================================================== */
-
-/* Workspace layout */
-.workspace {
-  display: grid; grid-template-columns: 320px minmax(0, 1fr);
-  max-width: 1540px; margin: auto;
-  min-height: calc(100vh - 72px);
-}
-.sidebar {
-  border-right: 1px solid var(--border);
-  padding: 32px 24px 24px;
-  background: var(--bg-alt);
-}
-.workbench {
-  padding: 32px clamp(24px, 4vw, 60px) 24px;
-  min-width: 0; max-width: 1070px; width: 100%; margin: auto;
-}
-
-/* Eyebrow */
-.eyebrow {
-  font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em;
-  color: var(--gold); font-weight: 600; margin-bottom: 12px; display: block;
-}
-
-/* Muted text */
-.muted { color: var(--text-muted); }
-.small { font-size: 12.5px; }
-
-/* Progress bar */
-progress {
-  width: 100%; height: 6px; border: none; border-radius: 3px;
-  background: var(--bg-deep); overflow: hidden;
-}
-progress::-webkit-progress-bar { background: var(--bg-deep); border-radius: 3px; }
-progress::-webkit-progress-value { background: var(--gold); border-radius: 3px; }
-
-/* Progress heading */
-.progress-heading {
-  display: flex; justify-content: space-between; gap: 8px;
-  font-size: 12.5px; margin-top: 24px; align-items: baseline;
-}
-.progress-heading span { color: var(--text-muted); }
-
-/* Checklist */
-.checklist { margin-top: 24px; }
-.checklist details { margin-bottom: 16px; }
-.checklist summary {
-  font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
-  text-transform: uppercase; color: var(--text-secondary);
-  cursor: pointer; padding: 8px 0;
-}
-.checklist summary:hover { color: var(--text); }
-
-.prompt-choice {
-  display: block; width: 100%; text-align: left;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 8px;
-  cursor: pointer; font: inherit; font-size: 13px;
-  transition: border-color .16s ease, background-color .16s ease;
-}
-.prompt-choice:hover:not(:disabled) { border-color: var(--gold-line); }
-.prompt-choice.current { border-color: var(--gold); background: var(--gold-soft); }
-.prompt-choice.accepted { border-left: 3px solid var(--gold); }
-.prompt-choice:disabled { opacity: 0.4; cursor: not-allowed; }
-
-/* Style badges for prompt delivery styles */
-.style-badge {
-  display: inline-block; padding: 1px 5px; margin-right: 4px;
-  border-radius: 3px; background: var(--gold-soft); color: var(--gold);
-  font-size: 9px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.3px; vertical-align: middle;
-}
-
-/* Recording strip */
-.recording-strip {
-  display: flex; align-items: center; gap: 16px;
-  background: var(--bg-alt); border: 1px solid var(--border-subtle);
-  border-radius: var(--radius); padding: 14px 18px; margin: 18px 0;
-}
-.recording-strip [role="status"] { font-size: 13px; color: var(--text-secondary); flex: 1; }
-.recording-time { font-variant-numeric: tabular-nums; font-size: 18px; font-weight: 600; color: var(--text); }
-meter { width: 100px; height: 8px; }
-
-/* Prompt card */
-.prompt-card {
-  background: var(--surface); border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg); padding: 28px; margin-bottom: 20px;
-}
-.prompt-text { font-size: 24px; font-weight: 500; line-height: 1.4; margin: 16px 0; }
-.prompt-meta { display: flex; gap: 12px; align-items: center; }
-.prompt-meta span {
-  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--text-muted); background: var(--bg-alt);
-  padding: 4px 10px; border-radius: var(--radius-sm);
-}
-
-/* Button rows */
-.button-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-.button-row.secondary { margin-top: 8px; }
-
-/* Takes */
-.take-row {
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--surface); border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 8px;
-}
-.take-row strong { font-size: 13px; font-weight: 500; }
-.take-row p { font-size: 12px; color: var(--text-muted); }
-
-/* Session row */
-.session-row {
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--surface); border: 1px solid var(--border-subtle);
-  border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px;
-}
-.session-row strong { display: block; margin-bottom: 4px; }
-.session-row p { font-size: 12px; color: var(--text-muted); }
-
-/* Resume area */
-.resume-area { margin-top: 32px; }
-.resume-area h3 { font-size: 14px; margin-bottom: 16px; }
-
-/* Responsive */
-@media (max-width: 900px) {
-  .workspace { grid-template-columns: 1fr; }
-  .sidebar { border-right: 0; border-bottom: 1px solid var(--border); }
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .scoreboard { grid-template-columns: 1fr; }
 }
