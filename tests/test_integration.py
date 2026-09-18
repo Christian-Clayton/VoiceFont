@@ -125,7 +125,7 @@ def test_full_pipeline_wav_to_mlflow(tmp_path):
     # ------------------------------------------------------------------
     # Generate 20 synthetic WAVs across 5 recording groups (4 each)
     # to satisfy group-based train/validation split requirements.
-    rng = np.random.default_rng(42)
+    np.random.default_rng(42)
     all_features = []
     recording_ids = []
     for i in range(20):
