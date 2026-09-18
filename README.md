@@ -36,7 +36,7 @@ Speech provisioning is separate: see [local setup](docs/local-setup.md). The dur
 5. Use **Create speech** for local neutral-style synthesis, job status/cancellation and WAV download.
 6. Optionally authorise **Acoustic ML** training after eight distinct selected original WAVs. See heldout reconstruction error versus baseline, the evaluation gate and local MLflow run ID.
 
-The printable [Calibration Checklist](docs/Calibration%20Checklist.md) contains 75 prompts across seven categories, including 54 core prompts. Coverage counts recordings, not verified phonemes or every facet of a voice. Speak in your natural accent and never strain.
+The printable [Calibration Checklist](docs/Calibration Checklist.md) contains 75 prompts across seven categories, including 54 core prompts. Coverage counts recordings, not verified phonemes or every facet of a voice. Speak in your natural accent and never strain.
 
 ## Verify locally
 
