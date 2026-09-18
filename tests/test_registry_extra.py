@@ -249,3 +249,21 @@ def test_search_features_rejects_wrong_dimension(tmp_path):
     store = ProfileStore(tmp_path / "registry")
     with pytest.raises(RegistryError, match="invalid query feature dimension"):
         store.search_features([0.5] * 10)  # Wrong dimension
+
+
+def test_enroll_rollback_on_staging_failure(tmp_path, signal_wav):
+    """Line 180: cleanup target when enrollment fails after target.mkdir()."""
+    store = ProfileStore(tmp_path / "registry")
+    # Make Path.rename fail after target.mkdir() succeeds
+    original_rename = __import__('pathlib').Path.rename
+    def failing_rename(self, target):
+        if 'profile.json' in str(target):
+            raise OSError("rename failed")
+        return original_rename(self, target)
+    
+    with patch("voicefont.registry.Path.rename", failing_rename):
+        with pytest.raises(OSError, match="rename failed"):
+            store.enroll(signal_wav(), voice_id="fail-voice", name="Signal", consent=True)
+    
+    # Verify target directory was cleaned up
+    assert not (tmp_path / "registry" / "fail-voice").exists()

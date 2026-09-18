@@ -4,6 +4,7 @@ models/
 artifacts/
 mlruns/
 mlartifacts/
+training/tts_output/mlflow/
 *.db
 *.sqlite
 *.sqlite3

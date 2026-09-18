@@ -1,5 +1,6 @@
 """Tests targeting missing experiment.py lines: 58, 102, 120, 123, 207, 262, 266, 350-351."""
 
+import json
 import time
 from unittest.mock import MagicMock, patch
 
@@ -131,6 +132,75 @@ def test_max_experiments_limit(tmp_path):
     with patch("voicefont.experiment.MAX_EXPERIMENTS", 100):
         with pytest.raises(ExperimentError, match="limit reached"):
             service.start(session["id"], consent=True)
+
+
+def test_read_result_oversized(tmp_path):
+    """Line 228: oversized result read."""
+    service = ExperimentService(tmp_path / "profiles")
+    job_id = "e" * 32
+    directory = service.root / job_id
+    directory.mkdir()
+    target = directory / "result.json"
+    # Write content larger than MAX_RESULT_BYTES
+    target.write_text("x" * (256 * 1024 + 1))
+
+    with pytest.raises(ExperimentError, match="invalid"):
+        service.get(job_id)
+
+
+def test_read_result_unknown_field(tmp_path):
+    """Line 245: result with unknown field fails validation."""
+    service = ExperimentService(tmp_path / "profiles")
+    job_id = "f" * 32
+    directory = service.root / job_id
+    directory.mkdir()
+    target = directory / "result.json"
+    data = {
+        "id": job_id,
+        "schema_version": 1,
+        "status": "completed",
+        "unknown_field": "bad"
+    }
+    target.write_text(json.dumps(data))
+
+    with pytest.raises(ExperimentError, match="invalid"):
+        service.get(job_id)
+
+
+def test_read_result_id_mismatch(tmp_path):
+    """Line 247: id in result doesn't match job_id."""
+    service = ExperimentService(tmp_path / "profiles")
+    job_id = "a" * 32
+    directory = service.root / job_id
+    directory.mkdir()
+    target = directory / "result.json"
+    data = {
+        "id": "b" * 32,
+        "schema_version": 1,
+        "status": "completed",
+    }
+    target.write_text(json.dumps(data))
+
+    with pytest.raises(ExperimentError, match="invalid"):
+        service.get(job_id)
+
+
+def test_read_result_bad_status(tmp_path):
+    """Line 249: invalid status value."""
+    service = ExperimentService(tmp_path / "profiles")
+    job_id = "c" * 32
+    directory = service.root / job_id
+    directory.mkdir()
+    target = directory / "result.json"
+    data = {
+        "id": job_id,
+        "schema_version": 1,
+        "status": "unknown_status",
+    }
+    target.write_text(json.dumps(data))
+
+    with pytest.raises(ExperimentError, match="invalid"):
+        service.get(job_id)
 
 
 def test_work_save_failure_is_handled(tmp_path):
