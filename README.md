@@ -62,4 +62,4 @@ The heavyweight speech test is opt-in: set `VOICEFONT_RUN_OPENVOICE_TEST=1` and 
 - Loopback-only, single-user, unauthenticated service. Do not expose it publicly. The standard launcher disables sensitive access logs.
 - Optional Weaviate, Triton, Kubernetes/Helm, Terraform, streaming and multi-style synthesis remain roadmap items, not delivered features.
 
-Original plans remain byte-exact in `docs/planning/archive/`. Private recordings, model weights, runtime environments and build output are excluded from Git. Nothing is automatically published or pushed.
+Private recordings, model weights, runtime environments and build output are excluded from Git. Nothing is automatically published or pushed.

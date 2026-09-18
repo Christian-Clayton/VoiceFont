@@ -218,6 +218,89 @@ button, input, select { font-family: inherit; }
 /* VoiceFont-specific classes                                            */
 /* ====================================================================== */
 
+/* Skip link */
+.skip-link {
+  position: absolute; top: -40px; left: 16px;
+  background: var(--text); color: var(--bg-alt);
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  font-size: 12px; font-weight: 500; text-decoration: none;
+  transition: top .2s ease; z-index: 1000;
+}
+.skip-link:focus { top: 12px; outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* Top navigation bar */
+.topbar {
+  display: flex; align-items: center; gap: 24px;
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 18px; font-weight: 600; letter-spacing: -0.02em;
+  color: var(--text); text-decoration: none;
+  margin-right: auto;
+}
+.brand-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--text); color: var(--bg-alt);
+  font-size: 11px; font-weight: 700;
+}
+.local-badge {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--gold);
+  border: 1px solid var(--gold-line); border-radius: 4px;
+  padding: 2px 5px; margin-left: 4px;
+}
+.nav-buttons {
+  display: inline-flex; gap: 8px;
+  background: var(--bg-alt); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 4px;
+}
+.nav-button {
+  background: transparent; border: 1px solid transparent; border-radius: var(--radius-sm);
+  padding: 8px 16px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 500;
+  color: var(--text-secondary); transition: background-color .16s ease, color .16s ease, border-color .16s ease;
+}
+.nav-button:hover:not(.active) { color: var(--text); background: var(--surface); border-color: var(--border); }
+.nav-button.active { background: var(--surface); color: var(--text); border-color: var(--gold); box-shadow: 0 1px 2px rgba(45,45,45,0.06); }
+.private-note {
+  font-size: 12px; color: var(--text-muted); font-style: italic;
+  margin-left: 8px;
+}
+
+/* Notice / toast */
+.notice {
+  padding: 12px 32px; font-size: 13px; color: var(--text-secondary);
+  background: var(--bg-alt); border-bottom: 1px solid var(--border);
+}
+.notice.error { color: #8a2323; background: #f9eaea; border-bottom-color: #e6c5c5; }
+
+/* Primary button (used directly without .btn) */
+button.primary, .button.primary {
+  font-size: 14px; font-weight: 500; border-radius: var(--radius); padding: 12px 22px;
+  cursor: pointer; transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+  border: 1px solid var(--text); background: var(--text); color: var(--bg-alt);
+}
+button.primary:hover:not(:disabled), .button.primary:hover:not(:disabled) { background: var(--gold); border-color: var(--gold); color: #2d2416; }
+button.primary:disabled, .button.primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Generic button link style */
+.button {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 500; border-radius: var(--radius); padding: 12px 22px;
+  cursor: pointer; transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+  border: 1px solid var(--text); background: var(--text); color: var(--bg-alt);
+  text-decoration: none;
+}
+.button:hover { background: var(--gold); border-color: var(--gold); color: #2d2416; }
+
+/* Single view pages (library / experiments) */
+.single-view {
+  max-width: 900px; margin: auto; padding: 32px clamp(24px, 4vw, 60px);
+}
+
 /* Workspace layout */
 .workspace {
   display: grid; grid-template-columns: 320px minmax(0, 1fr);
